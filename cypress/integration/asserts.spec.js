@@ -94,6 +94,6 @@ it("Assertivas em 'Numbers'", () => {
   expect(int).to.be.lessThan(5)
   expect(int).to.be.below(5)
 
-  expect(float).to.be.closeTo(2.4, 0.11)
+  expect(float).to.be.closeTo(2.4, 0.11) // 0.1 não deu certo
 
 })
