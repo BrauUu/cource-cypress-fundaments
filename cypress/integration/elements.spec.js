@@ -32,7 +32,7 @@ describe('Trabalhando com elementos', () => {
 
   })
 
-  it.only('Trabalhando com campos de texto', () => {
+  it('Trabalhando com campos de texto', () => {
 
     cy.get('#formNome')
       .type('Nome')
@@ -46,6 +46,58 @@ describe('Trabalhando com elementos', () => {
       .type('Caixa de texto grande')
       .should('have.value', 'Caixa de texto grande')
 
+    cy.get('#tabelaUsuarios > :nth-child(2) > :nth-child(1) > :nth-child(6) > input')
+      .type('Campo em tabela')
+      .should('have.value', 'Campo em tabela')
+
+    cy.get('#tabelaUsuarios > :nth-child(2) > :nth-child(1) > :nth-child(6) > input')
+      .clear()
+      .type('Campo em tabelaa{backspace}', {delay: 100})
+  })
+  it('Trabalhando com Radio buttons', () => {
+    
+    cy.get('#formSexoFem')
+      .click()
+      .should('be.checked')
+    
+    cy.get('#formSexoMasc')
+      .should('not.be.checked')
+
+    cy.get('#formSexoMasc')
+      .click()
+      .should('be.checked')
+    
+    cy.get('#formSexoFem')
+      .should('not.be.checked')
+
+    cy.get('[name="formSexo"]')
+      .should('have.length', 2)
+
+  })
+
+  it('Trabalhando com Checkbox', () => {
+
+    cy.get('[name="formComidaFavorita"]')
+      .click({multiple: true})
+      .should('be.checked')
+  })
+
+  it('Trabalhando com Combo', () => {
+
+    cy.get('[data-test="dataEscolaridade"]')
+      .select('2o grau completo')
+      .should('have.value', '2graucomp')
+
+      //TODO validar todas as opções do combo 
+
+  })
+
+  it.only('Trabalhando com Combo Multiplo', () => {
+
+    cy.get('[data-testid="dataEsportes"')
+      .select(['futebol', 'Corrida', 'natacao'])
+
+      //TODO validar opções selecionados do combo múltiplo
 
   })
 })
