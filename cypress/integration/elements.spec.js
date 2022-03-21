@@ -88,7 +88,16 @@ describe('Trabalhando com elementos', () => {
       .select('2o grau completo')
       .should('have.value', '2graucomp')
 
-      //TODO validar todas as opções do combo 
+      cy.get('[data-test="dataEscolaridade"] option')
+        .should('have.length', 8)
+      
+      cy.get('[data-test="dataEscolaridade"] option').then(options => {
+        const values = []
+        options.each(function() {
+          values.push(this.innerHTML)
+        })
+        expect(values).to.include.members(["Mestrado"])
+      })
 
   })
 
@@ -97,7 +106,9 @@ describe('Trabalhando com elementos', () => {
     cy.get('[data-testid="dataEsportes"')
       .select(['futebol', 'Corrida', 'natacao'])
 
-      //TODO validar opções selecionados do combo múltiplo
+      cy.get('[data-testid="dataEsportes"').then(combo => {
+       cy.wrap(combo.val()).should('deep.equal', [ "natacao", "futebol", "Corrida" ])
+      })
 
   })
 })

@@ -18,7 +18,7 @@ describe('Passos Básicos', () => {
     })
 
     cy.get("#formSobrenome").then(selector => {
-      cy.get(selector).type(titleVal)
+      cy.wrap(selector).type(titleVal)
     })
 
 
