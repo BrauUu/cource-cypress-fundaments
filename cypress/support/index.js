@@ -16,5 +16,20 @@
 // Import commands.js using ES2015 syntax:
 import './commands'
 
+//Foi invertido a prioridade dos seletores 'data-testid' e 'data-test'
+
+Cypress.SelectorPlayground.defaults({
+    selectorPriority: [
+        'data-cy', 
+        'data-testid', 
+        'data-test', 
+        'id',
+        'class',
+        'tag',
+        'attributes',
+        'nth-child'
+    ],
+  })
+
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
