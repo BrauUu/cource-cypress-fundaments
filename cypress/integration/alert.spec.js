@@ -9,12 +9,7 @@ describe('Trabalhando com Alerta e outros eventos do Window', () => {
 
     it('Trabalhando com alert()', () => {
 
-        cy.get('#alert')
-            .click()
-
-        cy.on("window:alert", msg => {
-            expect(msg).to.be.equal("Alert Simples")
-        })
+        cy.clickAlert('#alert', 'Alert Simples')
 
     })
 
@@ -59,7 +54,7 @@ describe('Trabalhando com Alerta e outros eventos do Window', () => {
 
     })
 
-    it.only('Trabalhando com prompt()', () => {
+    it('Trabalhando com prompt()', () => {
 
         let value = 23
 
