@@ -1,34 +1,21 @@
 /// <reference types="cypress" />
 
+const billName = "Conta Exemplo"
+const changedBillName = "Conta Alterada"
+const transactionName = "Movimento exemplo"
+const transactionValue = 500
+
 describe('Casos de testes funcionais em barrigareact', () => {
 
     beforeEach('Logando', () => {
 
         cy.visit('/')
 
-        cy.fixture('./login.json').then(login => {
-            cy.get('[data-test=email]')
-                .type(login.email)
-
-            cy.get('[data-test=passwd]')
-                .type(login.pass, { log: false })
-
-            cy.contains("Entrar")
-                .click()
-
-        })
-
-        cy.get('.toast')
-            .should('contain', 'Bem vindo, ')
-
-        cy.url()
-            .should('be.eq', 'https://barrigareact.wcaquino.me/')
+        cy.login('./login.json')
 
     })
 
     context('Trabalhando com Contas', () => {
-
-        let billName = "Conta Exemplo"
 
         beforeEach('Acessando tela de contas', () => {
 
@@ -61,14 +48,12 @@ describe('Casos de testes funcionais em barrigareact', () => {
 
         it('Alterando de conta', () => {
 
-            const newBillName = "Conta Alterada"
-
             cy.xpath(`//table//td[contains(.,"${billName}")]/..//i[@class="far fa-edit"]`)
                 .click()
 
             cy.get('[data-test=nome]')
                 .clear()
-                .type(newBillName)
+                .type(changedBillName)
 
             cy.get('button[alt=Salvar]')
                 .click()
@@ -77,24 +62,85 @@ describe('Casos de testes funcionais em barrigareact', () => {
                 .should('contain', 'Conta atualizada com sucesso!')
 
             cy.get('table > tbody')
-                .should('contain', newBillName)
+                .should('contain', changedBillName)
+
+        })
+
+        it("Inserção de conta repetida", () => {
+
+            cy.get('[data-test=nome]')
+                .type(changedBillName)
+
+            cy.get('button[alt=Salvar]')
+                .click()
+
+            cy.get('.toast')
+                .should('contain', 'Erro: Error: Request failed with status code 400')
+
+            cy.get('table > tbody')
+                .should('contain', changedBillName)
 
         })
 
     })
 
-    after('Resetando a aplicação', () => {
+    context('Outros testes', () => {
 
-        cy.get('[data-test=menu-settings]')
-            .click()
+        it('Insersão de movimento', () => {
 
-        cy.contains('Resetar')
-            .click()
+            cy.get('[data-test=menu-movimentacao')
+                .click()
 
-        cy.get('.toast')
-            .should('contain', 'Dados resetados com sucesso!')
+            cy.get('[data-test=descricao]')
+                .type(transactionName)
 
+            cy.get('[data-test=valor]')
+                .type(transactionValue)
 
+            cy.get('[data-test=envolvido]')
+                .type('Interessado de exemplo')
+
+            cy.get('[data-test=conta]')
+                .select(changedBillName)
+
+            cy.get('[data-test="status"]')
+                .click()
+
+            cy.contains('Salvar')
+                .click()
+
+            cy.get('.toast')
+                .should('contain', 'Movimentação inserida com sucesso!')
+
+            cy.get('[data-test=mov-row]')
+                .should('contain', transactionName)
+
+        })
+
+        it('Verificando o saldo', () => {
+
+            cy.xpath(`//tr[contains(., "${changedBillName}")]//td[2]`)
+                .should('contain', transactionValue)
+
+        })
+
+        it('Remoção de movimento', () => {
+
+            cy.get('[data-test="menu-extrato"]')
+                .click()
+
+            cy.xpath(`//li[contains(., "${transactionName}")]//i[@class="far fa-trash-alt"]`)
+                .click()
+
+            cy.get('.toast')
+                .should('contain', 'Movimentação removida com sucesso!')
+
+        })
     })
 
+    after('Resetando a aplicação', () => {
+
+        cy.resetData()
+
+    })
 })
