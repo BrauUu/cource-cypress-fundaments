@@ -1,9 +1,15 @@
 /// <reference types="cypress" />
 
-const billName = "Conta Exemplo"
-const changedBillName = "Conta Alterada"
-const transactionName = "Movimento exemplo"
+const bill = "Conta Exemplo"
+const billToChange = "Conta para alterar"
+const changedBill = "Conta Alterada"
+const repeatedBill = "Conta mesmo nome"
+const transaction = "Movimento exemplo"
 const transactionValue = 500
+const billToTransaction = "Conta com movimentacao"
+const previousCreatedTransaction = "Total"
+const valueOfPreviousCreatedTransaction = "2.686,00"
+const transactionToExclude = "Movimentacao para exclusao"
 
 describe('Casos de testes funcionais em barrigareact', () => {
 
@@ -33,7 +39,7 @@ describe('Casos de testes funcionais em barrigareact', () => {
         it('Inserção de conta', () => {
 
             cy.get('[data-test=nome]')
-                .type(billName)
+                .type(bill)
 
             cy.get('button[alt=Salvar]')
                 .click()
@@ -42,18 +48,18 @@ describe('Casos de testes funcionais em barrigareact', () => {
                 .should('contain', 'Conta inserida com sucesso!')
 
             cy.get('table > tbody')
-                .should('contain', billName)
+                .should('contain', bill)
 
         })
 
         it('Alterando de conta', () => {
 
-            cy.xpath(`//table//td[contains(.,"${billName}")]/..//i[@class="far fa-edit"]`)
+            cy.xpath(`//table//td[contains(.,"${billToChange}")]/..//i[@class="far fa-edit"]`)
                 .click()
 
             cy.get('[data-test=nome]')
                 .clear()
-                .type(changedBillName)
+                .type(changedBill)
 
             cy.get('button[alt=Salvar]')
                 .click()
@@ -62,14 +68,14 @@ describe('Casos de testes funcionais em barrigareact', () => {
                 .should('contain', 'Conta atualizada com sucesso!')
 
             cy.get('table > tbody')
-                .should('contain', changedBillName)
+                .should('contain', changedBill)
 
         })
 
         it("Inserção de conta repetida", () => {
 
             cy.get('[data-test=nome]')
-                .type(changedBillName)
+                .type(repeatedBill)
 
             cy.get('button[alt=Salvar]')
                 .click()
@@ -78,7 +84,7 @@ describe('Casos de testes funcionais em barrigareact', () => {
                 .should('contain', 'Erro: Error: Request failed with status code 400')
 
             cy.get('table > tbody')
-                .should('contain', changedBillName)
+                .should('contain', repeatedBill)
 
         })
 
@@ -92,7 +98,7 @@ describe('Casos de testes funcionais em barrigareact', () => {
                 .click()
 
             cy.get('[data-test=descricao]')
-                .type(transactionName)
+                .type(transaction)
 
             cy.get('[data-test=valor]')
                 .type(transactionValue)
@@ -101,7 +107,7 @@ describe('Casos de testes funcionais em barrigareact', () => {
                 .type('Interessado de exemplo')
 
             cy.get('[data-test=conta]')
-                .select(changedBillName)
+                .select(billToTransaction)
 
             cy.get('[data-test="status"]')
                 .click()
@@ -113,14 +119,14 @@ describe('Casos de testes funcionais em barrigareact', () => {
                 .should('contain', 'Movimentação inserida com sucesso!')
 
             cy.get('[data-test=mov-row]')
-                .should('contain', transactionName)
+                .should('contain', transaction)
 
         })
 
-        it('Verificando o saldo', () => {
+        it('Verificando o saldo total', () => {
 
-            cy.xpath(`//tr[contains(., "${changedBillName}")]//td[2]`)
-                .should('contain', transactionValue)
+            cy.xpath(`//tr[contains(., "${previousCreatedTransaction}")]//td[2]`)
+                .should('contain', valueOfPreviousCreatedTransaction)
 
         })
 
@@ -129,7 +135,7 @@ describe('Casos de testes funcionais em barrigareact', () => {
             cy.get('[data-test="menu-extrato"]')
                 .click()
 
-            cy.xpath(`//li[contains(., "${transactionName}")]//i[@class="far fa-trash-alt"]`)
+            cy.xpath(`//li[contains(., "${transactionToExclude}")]//i[@class="far fa-trash-alt"]`)
                 .click()
 
             cy.get('.toast')
