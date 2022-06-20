@@ -1,5 +1,7 @@
 /// <reference types="cypress" />
 
+const baseUrl = "https://barrigareact.wcaquino.me/"
+
 const bill = "Conta Exemplo"
 const billToChange = "Conta para alterar"
 const changedBill = "Conta Alterada"
@@ -15,7 +17,7 @@ describe('Casos de testes funcionais em barrigareact', () => {
 
     beforeEach('Logando', () => {
 
-        cy.visit('/')
+        cy.visit(baseUrl)
 
         cy.login('./login.json')
 
