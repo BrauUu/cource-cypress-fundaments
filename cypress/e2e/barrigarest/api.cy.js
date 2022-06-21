@@ -1,4 +1,5 @@
 /// <reference types="cypress" />
+const dayjs = require('dayjs')
 
 const baseUrl = "https://barrigarest.wcaquino.me"
 let token
@@ -76,7 +77,7 @@ describe('Casos de testes via API', () => {
         })
     })
 
-    it('Inserindo movimentação', () => {
+    it.only('Inserindo movimentação', () => {
 
         cy.createBill("Conta para ser alterada", token)
             .then(response => {
@@ -91,8 +92,8 @@ describe('Casos de testes via API', () => {
                     },
                     body: {
                         conta_id: response.body.id,
-                        data_pagamento: '20/06/2022',
-                        data_transacao: '20/06/2022',
+                        data_pagamento: dayjs(new Date).add(1, 'day').format('DD/MM/YYYY'),
+                        data_transacao: dayjs(new Date).format('DD/MM/YYYY'),
                         descricao: "Movimento via API",
                         envolvido: "Algum interessado",
                         status: true,
