@@ -77,7 +77,7 @@ describe('Casos de testes via API', () => {
         })
     })
 
-    it.only('Inserindo movimentação', () => {
+    it('Inserindo movimentação', () => {
 
         cy.createBill("Conta para ser alterada", token)
             .then(response => {
@@ -103,8 +103,6 @@ describe('Casos de testes via API', () => {
                 }).its('status')
                     .should('be.eq', 201)
             })
-
-
     })
 
     after('Limpeza de dados', () => {
