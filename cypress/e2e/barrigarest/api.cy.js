@@ -38,35 +38,27 @@ describe('Casos de testes via API', () => {
 
     it('Alterando uma conta', () => {
 
-        cy.request({
-            method: 'POST',
-            url: `${baseUrl}/contas`,
-            headers: {
-                "Authorization": `JWT ${token}`
-            },
-            body: {
-                "nome": "Conta para ser alterada"
-            }
-        }).then(response => {
+        cy.createBill("Conta para ser alterada", token)
+            .then(response => {
 
-            expect(response.status).eq(201)
+                expect(response.status).eq(201)
 
-            cy.request({
-                method: 'PUT',
-                url: `${baseUrl}/contas/${response.body.id}`,
-                headers: {
-                    "Authorization": `JWT ${token}`
-                },
-                body: {
-                    "nome": "Conta alterada"
-                }
-            }).its('status')
-                .should('be.eq', 200)
+                cy.request({
+                    method: 'PUT',
+                    url: `${baseUrl}/contas/${response.body.id}`,
+                    headers: {
+                        "Authorization": `JWT ${token}`
+                    },
+                    body: {
+                        "nome": "Conta alterada"
+                    }
+                }).its('status')
+                    .should('be.eq', 200)
 
-        })
+            })
     })
 
-    it.only('Inserindo uma conta com nome repetido', () => {
+    it('Inserindo uma conta com nome repetido', () => {
 
         cy.request({
             method: 'POST',
@@ -78,16 +70,41 @@ describe('Casos de testes via API', () => {
                 "nome": "Conta mesmo nome"
             },
             failOnStatusCode: false
-            }).then(response => {
-                expect(response.status).eq(400)
-                expect(response.body.error).contains('Já existe uma conta com esse nome!')
-            })
-            
-            
-            
-
+        }).then(response => {
+            expect(response.status).eq(400)
+            expect(response.body.error).contains('Já existe uma conta com esse nome!')
+        })
     })
 
+    it('Inserindo movimentação', () => {
+
+        cy.createBill("Conta para ser alterada", token)
+            .then(response => {
+
+                expect(response.status).eq(201)
+
+                cy.request({
+                    method: 'POST',
+                    url: `${baseUrl}/transacoes`,
+                    headers: {
+                        "Authorization": `JWT ${token}`
+                    },
+                    body: {
+                        conta_id: response.body.id,
+                        data_pagamento: '20/06/2022',
+                        data_transacao: '20/06/2022',
+                        descricao: "Movimento via API",
+                        envolvido: "Algum interessado",
+                        status: true,
+                        tipo: "REC",
+                        valor: "200",
+                    }
+                }).its('status')
+                    .should('be.eq', 201)
+            })
+
+
+    })
 
     after('Limpeza de dados', () => {
 

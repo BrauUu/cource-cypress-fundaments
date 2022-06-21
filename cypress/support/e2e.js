@@ -18,21 +18,22 @@ require('cypress-xpath')
 // Import commands.js using ES2015 syntax:
 import './commands'
 import './barrigareact/functionalCommands'
+import './barrigarest/apiCommands'
 
 //Foi invertido a prioridade dos seletores 'data-testid' e 'data-test'
 
 Cypress.SelectorPlayground.defaults({
-    selectorPriority: [
-        'data-cy', 
-        'data-testid', 
-        'data-test', 
-        'id',
-        'class',
-        'tag',
-        'attributes',
-        'nth-child'
-    ],
-  })
+  selectorPriority: [
+    'data-cy',
+    'data-testid',
+    'data-test',
+    'id',
+    'class',
+    'tag',
+    'attributes',
+    'nth-child'
+  ],
+})
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
