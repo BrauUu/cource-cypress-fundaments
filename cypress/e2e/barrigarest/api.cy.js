@@ -79,7 +79,7 @@ describe('Casos de testes via API', () => {
 
     it('Inserindo movimentação', () => {
 
-        cy.createBill("Conta para ser alterada", token)
+        cy.createBill("Conta para movimentação", token)
             .then(response => {
 
                 expect(response.status).eq(201)
@@ -103,6 +103,49 @@ describe('Casos de testes via API', () => {
                 }).its('status')
                     .should('be.eq', 201)
             })
+    })
+
+    it('Validando o valor do movimento', () => {
+
+        cy.request({
+            method: 'GET',
+            url: `${baseUrl}/saldo`,
+            headers: {
+                "Authorization": `JWT ${token}`
+            }
+        }).then(res => {
+            for (const bill of res.body) {
+                if (bill.conta === "Conta para saldo") {
+                    expect(bill.saldo).eq("534.00")
+                }
+            }
+        })
+
+    })
+
+    it('Excluindo movimentação', () => {
+
+        cy.request({
+            method: 'GET',
+            url: `${baseUrl}/extrato/${dayjs().year()}${dayjs().month() + 1 < 10 ? '0' + (dayjs().month() + 1) : dayjs().month() + 1}`,
+            headers: {
+                "Authorization": `JWT ${token}`
+            }
+        }).then(res => {
+            for (const bill of res.body) {
+                if (bill.descricao === "Movimentacao para exclusao") {
+                    cy.request({
+                        method: 'DELETE',
+                        url: `${baseUrl}/transacoes/${bill.id}`,
+                        headers: {
+                            "Authorization": `JWT ${token}`
+                        }
+                    }).its('status')
+                        .should('be.eq', 204)
+                }
+            }
+        })
+
     })
 
     after('Limpeza de dados', () => {
