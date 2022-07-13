@@ -4,7 +4,7 @@ it('Teste Desagrupado', () => {
 
 }) 
 
-describe.only('Agrupador de Teste', () => {
+describe('Agrupador de Teste', () => {
   it('Teste Agrupado', () => {
 
   })

@@ -71,7 +71,7 @@ describe("", () => {
 
     })
 
-    context.only("Utilizando invoke", () => {
+    context("Utilizando invoke", () => {
 
         it("Exemplo com invoke", () => {
 

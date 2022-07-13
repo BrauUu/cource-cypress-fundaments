@@ -41,7 +41,7 @@ describe('Testes dinâmicos', () => {
         })
     })
 
-    it.only(`Cadastro selecionando todas opções de comida (Each)`, () => {
+    it(`Cadastro selecionando todas opções de comida (Each)`, () => {
     
         cy.get('#formNome')
             .type('Nome')

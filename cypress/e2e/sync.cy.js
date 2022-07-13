@@ -73,7 +73,7 @@ describe('Lidando com Timeouts', () => {
             .should('have.length', 2)
     })
 
-    it.only("Should x Then", () => {
+    it("Should x Then", () => {
 
         cy.get('#buttonListDOM')
             .click()

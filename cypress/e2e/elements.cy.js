@@ -101,7 +101,7 @@ describe('Trabalhando com elementos', () => {
 
   })
 
-  it.only('Trabalhando com Combo Multiplo', () => {
+  it('Trabalhando com Combo Multiplo', () => {
 
     cy.get('[data-testid="dataEsportes"')
       .select(['futebol', 'Corrida', 'natacao'])

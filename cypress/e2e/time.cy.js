@@ -38,7 +38,7 @@ describe('Testes dinâmicos', () => {
 
         })
 
-        it.only('Uilizando cy.tick', () => {
+        it('Uilizando cy.tick', () => {
 
             cy.clock()
 
