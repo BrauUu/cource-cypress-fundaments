@@ -1,0 +1,14 @@
+{
+    "body": [
+        {
+            "conta_id": 1,
+            "conta": "billToChange",
+            "saldo": "-100.00"
+        },
+        {
+            "conta_id": 2,
+            "conta": "Conta mesmo nome",
+            "saldo": "200.00"
+        }
+    ]
+}

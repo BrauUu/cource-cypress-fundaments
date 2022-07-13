@@ -1,0 +1,22 @@
+{
+    "body" : [
+        {
+            "id": 1,
+            "nome": "Conta para alterar",
+            "visivel": true,
+            "usuario_id": 1
+        },
+        {
+            "id": 2,
+            "nome": "Conta mesmo nome",
+            "visivel": true,
+            "usuario_id": 1
+        },
+        {
+            "id": 3,
+            "nome": "Conta com movimentacao",
+            "visivel": true,
+            "usuario_id": 1
+        }
+    ]
+}

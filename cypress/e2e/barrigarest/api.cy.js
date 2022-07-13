@@ -1,5 +1,5 @@
 /// <reference types="cypress" />
-const dayjs = require('dayjs')
+import dayjs from 'dayjs'
 
 const baseUrl = "https://barrigarest.wcaquino.me"
 let token

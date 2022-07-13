@@ -18,6 +18,7 @@ require('cypress-xpath')
 // Import commands.js using ES2015 syntax:
 import './commands'
 import './barrigareact/functionalCommands'
+import './barrigareact/interfaceCommands'
 import './barrigarest/apiCommands'
 
 //Foi invertido a prioridade dos seletores 'data-testid' e 'data-test'

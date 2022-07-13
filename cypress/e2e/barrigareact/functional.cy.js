@@ -9,8 +9,7 @@ const repeatedBill = "Conta mesmo nome"
 const transaction = "Movimento exemplo"
 const transactionValue = 500
 const billToTransaction = "Conta com movimentacao"
-const previousCreatedTransaction = "Total"
-const valueOfPreviousCreatedTransaction = "2.686,00"
+const balance = "2.686,00"
 const transactionToExclude = "Movimentacao para exclusao"
 
 describe('Casos de testes funcionais em barrigareact', () => {
@@ -127,8 +126,8 @@ describe('Casos de testes funcionais em barrigareact', () => {
 
         it('Verificando o saldo total', () => {
 
-            cy.xpath(`//tr[contains(., "${previousCreatedTransaction}")]//td[2]`)
-                .should('contain', valueOfPreviousCreatedTransaction)
+            cy.xpath(`//tr[contains(., "Total")]//td[2]`)
+                .should('contain', balance)
 
         })
 
